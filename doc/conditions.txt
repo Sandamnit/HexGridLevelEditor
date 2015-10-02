@@ -1,0 +1,24 @@
+This document contains a detailed list of all conditions that can be passed into the IF instruction.
+
+Conditions
+----------
+ 0 = POWER <= 50%
+	- This condition is met when the AI power is below 50%.
+	
+ 1 = POWER <= 25%
+	- This condition is met when the AI power is below 25%.
+	
+ 2 = FACING EDGE
+	- This condition is met when the AI is oriented in such a way that moving forward one unit would result in falling off the edge of the map.
+	
+ 3 = NOT FACING EDGE
+	- This condition is met when the AI is oriented in such a way that moving forward one unit would NOT result in falling off the edge of the map.
+	
+ 4 = FACING AI
+	- This condition is met when the AI is oriented directly facing an adversary within line-of-sight.
+	
+ 5 = ADJACENT AI
+	- This condition is met when the AI is positioned adjacent to an adversarial AI.
+	
+ 6 = SHIELD UP
+	- This condition is met when the AI has its shield enabled, if it has a shield.

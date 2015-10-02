@@ -1,0 +1,23 @@
+Here is a (probably unclear) description of how to encode/decode the code to generate a world map.
+
+The string is broken up into a number of pieces according to their location and values preceding said values.
+
+Characters
+----------
+0:       The radius of the hex grid (A = 0, B = 1, C = 2, etc).
+1-2:     The starting coordinate of the player object (1 -> x, 2 -> y, 3 -> z; lower-case indicates negative values).
+3:       The orientation of the player object (A = down-right, B = up-right, C = up, D = up-left, E = down-left, F = down).
+4-5:     The target coordinate for the player to reach (1 -> x, 2 -> y, 3 -> z).
+6:       The number of AI objects to insert into the world (A = 0, B = 1, C = 2, etc).
+[7]:     1-character ID of the first AI object to add to the world map (A = 0th AI, B = 1st AI, C = 2nd AI, etc).
+[8-9]:   Two character code specifying first AI position ([11] * 26 + [12])
+[10]:    The orientation of the first AI object (some AI will not have orientation, so anything will suffice here).
+[11]:    1-character id of the second AI object to add to the world map.
+[12-13]: The target coordinate for the second AI object.
+[14]:    The orientation fo the second AI object (some AI will not have orientation, so anything will suffice here).
+[...]:   Repeat until we have processed all AI objects specified by the value of character #9.
+[...]:   The remaining bits correspond to whether the serialized hexes exist or not.
+            To determine this, first subtract 'A' from the character to obtain a 4-bit nibble.
+            The order of existence occurs from least significant to most significant bit, and placement occurs in a radial order, starting in the center
+			    (see http://www.redblobgames.com/grids/hexagons/ for more details of how this is done)
+			For example, if the letter 'D' occurs, we obtain 3 = 0011 after we subtract 'A', and so the next two hexes exist, while the following two do not.

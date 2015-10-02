@@ -1,0 +1,96 @@
+Order of Operations
+-------------------
+1. Attack operations
+	a. LSR (6)
+	b. BMB (7)
+2. Movement operations
+	a. FWD (1)
+	b. BWD (2)
+	c. CW (3)
+	d. CCW (4)
+	e. 180 (5)
+3. Power operations
+	a. OFF (8)
+	b. SHLD (11)
+	c. NOP (0)
+	
+IF (9) conditionals and SUB (10) are resolved at the beginning of the phase and placed according to the op order above.
+	For example, given the following instruction set:
+		...
+		IF <FACING AI>
+			LSR
+		NOP
+		...
+	If the AI were adjacent to an adversary at the beginning of the phase, it would be flagged as a BMB instruction and occur first;
+	On the other hand, if the AI is not adjacent to an adversary, it would be flagged as a NOP instruction and occur last.
+
+An array is then populated based upon all AI in the game world and ordered according to the operations they are attempting to execute.
+When two AI attempt to execute the same instruction during the same phase, priority goes to the player AI, and then the adversarial AI
+in the order which they were instantiated in the game world.
+
+
+GENERAL INSTRUCTIONS FOR PLAYER/AI USE
+--------------------------------------
+ 0 == NOP
+	- This instruction means "no operation".
+	- When this instruction is executed, the AI does nothing, and gains back 5% of its power.
+	
+ 1 == FWD <n>
+	- This instruction means "forward".
+	- When this instruction is executed, the AI moves n units forward in the direction it is oriented.
+
+ 2 == BWD <n>
+	- This instruction means "backward".
+	- When this instruction is executed, the AI moves n units backward away from the direction it is oriented.
+	
+ 3 == CW <n>
+	- This instruction means "clockwise".
+	- When this instruction is executed, the AI rotates clockwise (to the right) by n units.
+	
+ 4 == CCW <n>
+	- This instruction means "counterclockwise".
+	- When this instruction is executed, the AI rotates counterclock (to the left) by n units.
+	
+ 5 == 180
+	- This instruction means "rotate 180 degrees".
+	- When this instruction is executed, the AI rotates 180 degrees, effectively turning around.
+	
+ 6 == LSR
+	- This instruction means "fire laser".
+	- When this instruction is executed, the AI fires a laser in the direction it is oriented, damaging any AI in its path.
+	
+ 7 == BMB <t>
+	- This instruction means "drop bomb".
+	- When this instruction is executed, the AI drops a bomb in its current location which will detonate in t units of time.
+
+ 8 == OFF
+	- This instruction means "power off".
+	- When this instruction is executed, the AI immediately powers off (rendering it immobile) for 3 units of time.
+	- When an AI is powered off, it immediately recovers to full power; however, it receives double damage while in this mode.
+	
+ 9 == IF <cond>
+	- This instruction means "if condition is met, execute the following line".
+	- When this instruction is executed, the AI checks the condition specified and if that condition is met, the following instruction is executed;
+	    otherwise, this instruction is ignored and the AI executes the next instruction.
+	- For a list of conditions which can be met, see the 'conditions.txt' file.
+		
+10 == SUB <n>
+	- This instruction means "execute specified subroutine".
+	- When this instrucction is executed, the first instruction of the specified subroutine is executed.
+	
+11 == SHLD <t>
+	- This instruction means "enable shield".
+	- When this instruction is executed, the AI's shield (if it has one) is enabled for t units of time, starting immediately.
+	- For each unit of time the shield is activated, the AI loses 10% of its power and take no damage in the direction it is oriented,
+	    as well as two adjacent orientations. For example, with the AI facing up, the shield blocks damage received from up-left, up, and up-right directions.
+
+12 == Reserved
+13 == Reserved
+14 == Reserved
+15 == Reserved
+	
+INSTRUCTIONS FOR ADVERSARIAL AI ONLY
+------------------------------------
+These instructions are not accessible to the player, but are intended to provide useful tools for the adverserial AI.
+
+16 = ???
