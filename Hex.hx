@@ -10,7 +10,7 @@ import openfl.events.MouseEvent;
 
 /**
  * ...
- * @author Jeffery Hein
+ * @author Jeffery Hein (testing)
  */
 class Hex extends Sprite
 {
