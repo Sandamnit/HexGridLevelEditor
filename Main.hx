@@ -18,6 +18,8 @@ class Main extends Sprite
 	public function new() {
 		super();
 		
+		//test comment
+		
 		var tf:TextField = new TextField();
 		tf.defaultTextFormat = new TextFormat("Arial", 10, 0xffffff);
 		tf.x = 10;
